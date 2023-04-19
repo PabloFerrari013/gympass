@@ -13,11 +13,11 @@ export async function validate(req: FastifyRequest, res: FastifyReply) {
 
     const validateCheckInUseCase = makeValidateCheckInUseCase();
 
-    const { checkIn } = await validateCheckInUseCase.execute({
+    await validateCheckInUseCase.execute({
       checkInId,
     });
 
-    return res.status(204).send({ checkIn });
+    return res.status(204).send();
   } catch (error) {
     if (error instanceof LateCheckInValidateError) {
       return res
@@ -25,6 +25,6 @@ export async function validate(req: FastifyRequest, res: FastifyReply) {
         .send("Check in can only be validated after 20 minutes");
     }
 
-    res.status(500).send(error);
+    return res.status(500).send(error);
   }
 }

@@ -3,7 +3,7 @@ import request from "supertest";
 import { app } from "@/app";
 import { createAndAuthenticateUser } from "@/utils/test/create-and-authenticate-user";
 
-describe("Create Validate Check-in (e2e)", () => {
+describe("Validate Check-in (e2e)", () => {
   beforeAll(async () => {
     await app.ready();
   });
@@ -13,7 +13,7 @@ describe("Create Validate Check-in (e2e)", () => {
   });
 
   it("should be able to validate check-in", async () => {
-    const { token } = await createAndAuthenticateUser(app);
+    const { token } = await createAndAuthenticateUser(app, true);
 
     const gymResponse = await request(app.server)
       .post("/gyms")
@@ -40,8 +40,6 @@ describe("Create Validate Check-in (e2e)", () => {
       .patch(`/check-ins/${checkInId}/validate`)
       .set("Authorization", `Bearer ${token}`)
       .send();
-
-    console.log(response);
 
     expect(response.statusCode).toEqual(204);
   });

@@ -13,7 +13,7 @@ describe("Check-in History (e2e)", () => {
   });
 
   it("should be able to list the history of check-in", async () => {
-    const { token } = await createAndAuthenticateUser(app);
+    const { token } = await createAndAuthenticateUser(app, true);
 
     const gymResponse = await request(app.server)
       .post("/gyms")
